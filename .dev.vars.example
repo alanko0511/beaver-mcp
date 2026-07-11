@@ -1,0 +1,19 @@
+# Copy to .dev.vars (gitignored) and fill in. Production uses `wrangler secret put` for each.
+
+# GitHub OAuth App (dev app with callback http://localhost:8788/callback)
+GITHUB_CLIENT_ID=<your github oauth app client id>
+GITHUB_CLIENT_SECRET=<your github oauth app client secret>
+
+# openssl rand -hex 32
+COOKIE_ENCRYPTION_KEY=<random 32-byte hex>
+
+# Comma-separated GitHub logins allowed to authorize. Empty/unset = deny everyone.
+ALLOWED_GITHUB_LOGINS=<your-github-username>
+
+# Google Maps Platform. Server key: restricted to Places API (New) + Routes API.
+GOOGLE_MAPS_API_KEY=<server api key>
+# Browser key shipped inside the map widget: restricted to Maps JavaScript API + HTTP referrers.
+GOOGLE_MAPS_BROWSER_KEY=<browser api key>
+
+# https://my.lunchmoney.app/developers
+LUNCHMONEY_TOKEN=<lunch money personal access token>

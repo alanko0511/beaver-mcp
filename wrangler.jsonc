@@ -1,0 +1,48 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "beaver-mcp",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-03-10",
+	"compatibility_flags": ["nodejs_compat"],
+	/**
+	 * All sensitive values are Worker secrets — never vars in this file (public repo).
+	 *
+	 * npx wrangler secret put GITHUB_CLIENT_ID
+	 * npx wrangler secret put GITHUB_CLIENT_SECRET
+	 * npx wrangler secret put COOKIE_ENCRYPTION_KEY
+	 * npx wrangler secret put ALLOWED_GITHUB_LOGINS      # comma-separated GitHub logins
+	 * npx wrangler secret put GOOGLE_MAPS_API_KEY        # server key: Places API (New) + Routes API
+	 * npx wrangler secret put GOOGLE_MAPS_BROWSER_KEY    # browser key: Maps JavaScript API only
+	 * npx wrangler secret put LUNCHMONEY_TOKEN
+	 */
+	"migrations": [
+		{
+			"new_sqlite_classes": ["BeaverMCP"],
+			"tag": "v1"
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "BeaverMCP",
+				"name": "MCP_OBJECT"
+			}
+		]
+	},
+	"kv_namespaces": [
+		{
+			"binding": "OAUTH_KV",
+			"id": "<Add-KV-ID>"
+		}
+	],
+	"observability": {
+		"enabled": true
+	},
+	"dev": {
+		"port": 8788
+	}
+}
