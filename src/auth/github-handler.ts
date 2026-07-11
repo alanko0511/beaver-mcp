@@ -40,7 +40,7 @@ app.get("/authorize", async (c) => {
 		csrfToken,
 		server: {
 			description:
-				"Personal MCP server (Google Maps + Lunch Money tools). Access is restricted to allowlisted GitHub accounts.",
+				"Personal MCP server (Lunch Money tools). Access is restricted to allowlisted GitHub accounts.",
 			name: "beaver-mcp",
 		},
 		setCookie,

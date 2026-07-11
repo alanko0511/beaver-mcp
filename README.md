@@ -14,7 +14,7 @@ Personal remote MCP server on Cloudflare Workers, connected to Claude as a custo
 
 **Auth:** the endpoint is public, so `/mcp` sits behind OAuth (`@cloudflare/workers-oauth-provider`). Claude signs in via GitHub; only logins in the `ALLOWED_GITHUB_LOGINS` secret may authorize (empty = deny all).
 
-The server is structured so any API becomes MCP tools with one folder (`client.ts` + `tools.ts`) and one line in `src/index.ts` — see the recipe in [CLAUDE.md](./CLAUDE.md). A previous Google Maps service with an MCP Apps map widget was removed (Claude ships equivalent maps features natively); its implementation — including the widget build pipeline — lives in git history at `76b251b` if ever needed as a reference.
+The server is structured so any API becomes MCP tools with one folder (`client.ts` + `tools.ts`) and one line in `src/index.ts` — see the recipe in [CLAUDE.md](./CLAUDE.md).
 
 ## Setup
 

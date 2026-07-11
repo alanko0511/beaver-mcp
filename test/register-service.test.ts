@@ -50,8 +50,8 @@ const service: ServiceModule = {
 			uri: "ui://test/widget.html",
 			html: (env) => `<html>key=${env.LUNCHMONEY_TOKEN}</html>`,
 			csp: {
-				connectDomains: ["https://maps.googleapis.com"],
-				resourceDomains: ["https://maps.gstatic.com"],
+				connectDomains: ["https://api.example.com"],
+				resourceDomains: ["https://cdn.example.com"],
 			},
 		},
 	],
@@ -96,8 +96,8 @@ describe("registerService", () => {
 		expect(content.text).toContain("key=fake-secret-123");
 		expect(result._meta?.ui).toMatchObject({
 			csp: {
-				connectDomains: ["https://maps.googleapis.com"],
-				resourceDomains: ["https://maps.gstatic.com"],
+				connectDomains: ["https://api.example.com"],
+				resourceDomains: ["https://cdn.example.com"],
 			},
 		});
 	});

@@ -14,7 +14,7 @@ Personal MCP server on Cloudflare Workers. Streamable-HTTP transport at `/mcp` (
 
 - `src/index.ts` — `OAuthProvider` wiring + `BeaverMCP` (McpAgent Durable Object). Tools register in `init()` by iterating the `services` array.
 - `src/auth/` — GitHub OAuth handler (Hono), allowlist, OAuth utils. Access control lives in TWO places on purpose: the `/callback` route (rejects non-allowlisted logins with 403 before completing authorization) and `BeaverMCP.init()` (throws if props fail the same check).
-- `src/services/<name>/` — one folder per external API. `types.ts` defines `ToolDef`/`ServiceModule`/`registerService`. The framework also supports MCP Apps widget tools (`widget:` field + `WidgetResource` with CSP domains); no service currently uses one — the removed Google Maps service at commit `76b251b` is the working reference, including the ext-apps bundle-inlining build pipeline widgets require.
+- `src/services/<name>/` — one folder per external API. `types.ts` defines `ToolDef`/`ServiceModule`/`registerService`. The framework also supports MCP Apps widget tools (`widget:` field + `WidgetResource` with CSP domains); no service currently uses one.
 - `test/` — vitest; upstream APIs mocked by stubbing global fetch (`test/helpers.ts`). Do NOT use `fetchMock` from `cloudflare:test` — removed in vitest-pool-workers 0.18.
 - Deploys: merge to main → GitHub Actions deploys after checks pass. Manual: `pnpm deploy`.
 
