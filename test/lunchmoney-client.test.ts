@@ -29,6 +29,13 @@ describe("LunchMoneyClient", () => {
 		expect(result.transactions).toHaveLength(1);
 	});
 
+	it("passes include_metadata through when set", async () => {
+		const captured = stubFetch(jsonResponse(200, { transactions: [], has_more: false }));
+		const client = new LunchMoneyClient("tok");
+		await client.listTransactions({ include_metadata: true, limit: 10 });
+		expect(captured[0].url.searchParams.get("include_metadata")).toBe("true");
+	});
+
 	it("PUTs update fields to /v2/transactions/:id", async () => {
 		const captured = stubFetch(jsonResponse(201, { id: 987, status: "reviewed" }));
 

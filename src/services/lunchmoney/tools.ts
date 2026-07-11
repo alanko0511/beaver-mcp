@@ -22,6 +22,14 @@ const listTransactionsTool = defineTool({
 		status: z.enum(["reviewed", "unreviewed", "delete_pending"]).optional(),
 		is_pending: z.boolean().optional(),
 		include_pending: z.boolean().optional(),
+		include_metadata: z
+			.boolean()
+			.optional()
+			.describe(
+				"Include raw Plaid metadata per transaction (merchant, counterparties, Plaid categories). " +
+					"Very verbose — set ONLY when the user explicitly asks for Plaid metadata; " +
+					"for one transaction prefer lunchmoney_get_transaction, which always includes it.",
+			),
 		updated_since: z
 			.string()
 			.optional()
