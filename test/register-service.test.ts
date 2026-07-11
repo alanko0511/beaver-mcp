@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { z } from "zod";
 import { defineTool, registerService, type ServiceModule, textResult } from "../src/services/types";
 
-const fakeEnv = { GOOGLE_MAPS_BROWSER_KEY: "browser-key-123" } as Env;
+const fakeEnv = { LUNCHMONEY_TOKEN: "fake-secret-123" } as Env;
 
 async function connect(service: ServiceModule) {
 	const server = new McpServer({ name: "test", version: "0.0.0" });
@@ -48,7 +48,7 @@ const service: ServiceModule = {
 		{
 			name: "Test Widget",
 			uri: "ui://test/widget.html",
-			html: (env) => `<html>key=${env.GOOGLE_MAPS_BROWSER_KEY}</html>`,
+			html: (env) => `<html>key=${env.LUNCHMONEY_TOKEN}</html>`,
 			csp: {
 				connectDomains: ["https://maps.googleapis.com"],
 				resourceDomains: ["https://maps.gstatic.com"],
@@ -93,7 +93,7 @@ describe("registerService", () => {
 		const content = result.contents[0];
 		expect(content.mimeType).toBe("text/html;profile=mcp-app");
 		if (!("text" in content)) throw new Error("expected text resource content");
-		expect(content.text).toContain("key=browser-key-123");
+		expect(content.text).toContain("key=fake-secret-123");
 		expect(result._meta?.ui).toMatchObject({
 			csp: {
 				connectDomains: ["https://maps.googleapis.com"],

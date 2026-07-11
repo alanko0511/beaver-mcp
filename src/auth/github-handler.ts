@@ -1,7 +1,6 @@
 import { env } from "cloudflare:workers";
 import type { AuthRequest, OAuthHelpers } from "@cloudflare/workers-oauth-provider";
 import { Hono } from "hono";
-import { isLocalhost, renderWidgetPreview } from "../dev/widget-preview";
 import { isLoginAllowed } from "./allowlist";
 import { fetchUpstreamAuthToken, getUpstreamAuthorizeUrl, type Props } from "./utils";
 import {
@@ -17,19 +16,6 @@ import {
 } from "./workers-oauth-utils";
 
 const app = new Hono<{ Bindings: Env & { OAUTH_PROVIDER: OAuthHelpers } }>();
-
-// Dev-only: preview widget HTML in a normal browser tab (see src/dev/widget-preview.ts).
-app.get("/widget-preview", async (c) => {
-	const url = new URL(c.req.url);
-	if (!isLocalhost(url)) return c.notFound();
-	const { widgets } = await import("../generated/widgets");
-	const name = url.searchParams.get("widget") ?? "map-search";
-	const html = widgets[name as keyof typeof widgets];
-	if (!html) return c.text(`Unknown widget: ${name}`, 404);
-	return renderWidgetPreview(
-		html.replace("__GOOGLE_MAPS_BROWSER_KEY__", c.env.GOOGLE_MAPS_BROWSER_KEY),
-	);
-});
 
 app.get("/authorize", async (c) => {
 	const oauthReqInfo = await c.env.OAUTH_PROVIDER.parseAuthRequest(c.req.raw);

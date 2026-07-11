@@ -5,10 +5,9 @@ import { isLoginAllowed } from "./auth/allowlist";
 import { GitHubHandler } from "./auth/github-handler";
 import type { Props } from "./auth/utils";
 import { lunchmoneyService } from "./services/lunchmoney/tools";
-import { mapsService } from "./services/maps/tools";
 import { registerService } from "./services/types";
 
-const services = [mapsService, lunchmoneyService];
+const services = [lunchmoneyService];
 
 export class BeaverMCP extends McpAgent<Env, Record<string, never>, Props> {
 	server = new McpServer({

@@ -5,16 +5,15 @@
 	"type": "module",
 	"packageManager": "pnpm@11.10.0",
 	"scripts": {
-		"dev": "pnpm build:widgets && wrangler dev",
+		"dev": "wrangler dev",
 		"start": "pnpm dev",
-		"deploy": "pnpm build:widgets && wrangler deploy",
-		"build:widgets": "node scripts/build-widgets.mjs",
+		"deploy": "wrangler deploy",
 		"cf-typegen": "wrangler types",
-		"typecheck": "pnpm build:widgets && tsc --noEmit",
+		"typecheck": "tsc --noEmit",
 		"lint": "biome check .",
 		"format": "biome check --write .",
 		"check": "pnpm lint && pnpm typecheck",
-		"test": "pnpm build:widgets && vitest run"
+		"test": "vitest run"
 	},
 	"dependencies": {
 		"@cloudflare/workers-oauth-provider": "^0.8.1",

@@ -21,8 +21,6 @@
 	 * npx wrangler secret put GITHUB_CLIENT_SECRET
 	 * npx wrangler secret put COOKIE_ENCRYPTION_KEY
 	 * npx wrangler secret put ALLOWED_GITHUB_LOGINS      # comma-separated GitHub logins
-	 * npx wrangler secret put GOOGLE_MAPS_API_KEY        # server key: Places API (New) + Routes API
-	 * npx wrangler secret put GOOGLE_MAPS_BROWSER_KEY    # browser key: Maps JavaScript API only
 	 * npx wrangler secret put LUNCHMONEY_TOKEN
 	 */
 	"migrations": [
