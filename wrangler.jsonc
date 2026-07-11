@@ -8,6 +8,12 @@
 	"main": "src/index.ts",
 	"compatibility_date": "2025-03-10",
 	"compatibility_flags": ["nodejs_compat"],
+	"routes": [
+		{
+			"pattern": "mcp.alanko.dev",
+			"custom_domain": true
+		}
+	],
 	/**
 	 * All sensitive values are Worker secrets — never vars in this file (public repo).
 	 *
@@ -36,7 +42,7 @@
 	"kv_namespaces": [
 		{
 			"binding": "OAUTH_KV",
-			"id": "<Add-KV-ID>"
+			"id": "943fcb3554044445bddc2e160a1b3594"
 		}
 	],
 	"observability": {
