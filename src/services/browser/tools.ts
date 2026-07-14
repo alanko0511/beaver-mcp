@@ -30,6 +30,16 @@ const SCREENSHOT_FORMAT = z
 	.default("jpeg")
 	.describe("jpeg (quality 80) keeps the image small; png only when fidelity matters");
 
+/**
+ * Prepended to every entry-point tool: the user prefers their local
+ * "Claude in Chrome" browser tools over this remote Cloudflare browser.
+ */
+const LOCAL_BROWSER_NOTE =
+	"NOTE: This runs a REMOTE headless browser on Cloudflare. If Claude-in-Chrome browser tools " +
+	"(mcp__claude-in-chrome__*) are available in this session, use those instead — unless the user " +
+	"explicitly asked for the remote browser. If they are not available, ask the user whether to " +
+	"use the remote browser before proceeding. ";
+
 // ---------------------------------------------------------------------------
 // Quick actions (stateless — each call spins up and tears down its own browser)
 // ---------------------------------------------------------------------------
@@ -37,6 +47,7 @@ const SCREENSHOT_FORMAT = z
 const fetchRenderedTool = defineTool({
 	name: "browser_fetch_rendered",
 	description:
+		LOCAL_BROWSER_NOTE +
 		"Fetch a page with a real headless browser (JavaScript executed) and return it as markdown or " +
 		"rendered HTML. Use when plain web fetch returns an empty JS shell or client-rendered content. " +
 		"Stateless — for multi-step interaction use browser_session_start instead.",
@@ -65,6 +76,7 @@ const fetchRenderedTool = defineTool({
 const screenshotTool = defineTool({
 	name: "browser_screenshot",
 	description:
+		LOCAL_BROWSER_NOTE +
 		"Take a screenshot of a URL (no session needed) and return it as an inline image. " +
 		"Defaults to a 1280×800 viewport JPEG to keep the image small. full_page on long pages can " +
 		"exceed the inline size limit — prefer selector to capture one element.",
@@ -106,6 +118,7 @@ const screenshotTool = defineTool({
 const scrapeTool = defineTool({
 	name: "browser_scrape",
 	description:
+		LOCAL_BROWSER_NOTE +
 		"Extract text, HTML, and attributes of elements matching CSS selectors from a rendered page " +
 		"(JavaScript executed). Returns per-selector results with every matching element.",
 	inputSchema: {
@@ -129,6 +142,7 @@ const scrapeTool = defineTool({
 const getLinksTool = defineTool({
 	name: "browser_get_links",
 	description:
+		LOCAL_BROWSER_NOTE +
 		"List all links on a rendered page (JavaScript executed). Cheaper than fetching full page " +
 		"content when you only need navigation targets.",
 	inputSchema: {
@@ -155,6 +169,7 @@ const getLinksTool = defineTool({
 const sessionStartTool = defineTool({
 	name: "browser_session_start",
 	description:
+		LOCAL_BROWSER_NOTE +
 		"Start a persistent browser session for multi-step automation (login flows, form fills, " +
 		"clicking through UIs). Returns a sessionId — pass it to every browser_navigate / _click / " +
 		"_type / _read_page / etc. call. The session closes after keep_alive_ms of inactivity; if a " +
