@@ -6,7 +6,7 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "beaver-mcp",
 	"main": "src/index.ts",
-	"compatibility_date": "2025-03-10",
+	"compatibility_date": "2026-03-24",
 	"compatibility_flags": ["nodejs_compat"],
 	"routes": [
 		{
@@ -22,6 +22,8 @@
 	 * npx wrangler secret put COOKIE_ENCRYPTION_KEY
 	 * npx wrangler secret put ALLOWED_GITHUB_LOGINS      # comma-separated GitHub logins
 	 * npx wrangler secret put LUNCHMONEY_TOKEN
+	 *
+	 * The browser service needs no secret — the browser binding below is auth-free.
 	 */
 	"migrations": [
 		{
@@ -43,6 +45,9 @@
 			"id": "943fcb3554044445bddc2e160a1b3594"
 		}
 	],
+	"browser": {
+		"binding": "BROWSER"
+	},
 	"observability": {
 		"enabled": true
 	},

@@ -1,6 +1,6 @@
 # beaver-mcp
 
-Personal MCP server on Cloudflare Workers. Streamable-HTTP transport at `/mcp` (prod: `https://mcp.alanko.dev/mcp`), gated by GitHub OAuth (`@cloudflare/workers-oauth-provider`) with a login allowlist. Services wrap external APIs (currently Lunch Money) as MCP tools.
+Personal MCP server on Cloudflare Workers. Streamable-HTTP transport at `/mcp` (prod: `https://mcp.alanko.dev/mcp`), gated by GitHub OAuth (`@cloudflare/workers-oauth-provider`) with a login allowlist. Services wrap external APIs (Lunch Money, Cloudflare Browser Run) as MCP tools.
 
 ## Commands
 
@@ -40,3 +40,5 @@ Personal MCP server on Cloudflare Workers. Streamable-HTTP transport at `/mcp` (
 
 - Lunch Money v2 is alpha: amounts are 4dp strings (positive = expense), currency lowercase, `tag_ids` replaces / `additional_tag_ids` appends (mutually exclusive), single-txn PUT returns 201. Mock server for testing: `https://mock.lunchmoney.dev/v2`.
 - OAuth changes: test locally first — the flow needs a browser (`npx mcp-remote http://localhost:8788/mcp --allow-http --transport http-only`), and pace JSON-RPC messages (the Durable Object transport needs the `Mcp-Session-Id` from initialize before accepting more requests).
+- For the local mcp-remote flow, run dev as `wrangler dev --local-upstream localhost:8788` — otherwise wrangler infers the host from the custom-domain route and the OAuth metadata advertises `mcp.alanko.dev`, which mcp-remote rejects (`Protected resource ... does not match`).
+- Browser Run (`src/services/browser/`): the binding needs NO secret. `compatibility_date` must stay >= 2026-03-24 (floor for the `quickAction` binding method). Session tools carry state via `sessionId` param (connect → act → `disconnect()`, never `close()` except in `browser_session_close`). Local `wrangler dev` runs a real local Chromium for session/puppeteer tools, but does NOT implement `quickAction` ("The RPC receiver does not implement the method") — quick-action tools (`browser_fetch_rendered`, `browser_screenshot`, `browser_scrape`, `browser_get_links`) are only verifiable in prod. Tests stub the binding object (quick actions) and the `sessionDeps` seam in `session.ts` (puppeteer) — `vi.mock` of `@cloudflare/puppeteer` is not needed.
