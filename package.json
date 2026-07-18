@@ -16,7 +16,6 @@
 		"test": "vitest run"
 	},
 	"dependencies": {
-		"@cloudflare/puppeteer": "^1.1.0",
 		"@cloudflare/workers-oauth-provider": "^0.8.1",
 		"@modelcontextprotocol/ext-apps": "^1.7.4",
 		"@modelcontextprotocol/sdk": "^1.21.0",

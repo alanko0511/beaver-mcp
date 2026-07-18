@@ -67,18 +67,6 @@ export function jsonResult(value: unknown): CallToolResult {
 	return { content: [{ type: "text", text: JSON.stringify(value, null, 2) }] };
 }
 
-export function imageResult(
-	base64Data: string,
-	mimeType: string,
-	caption?: string,
-): CallToolResult {
-	const content: CallToolResult["content"] = [{ type: "image", data: base64Data, mimeType }];
-	if (caption) {
-		content.push({ type: "text", text: caption });
-	}
-	return { content };
-}
-
 function errorResult(err: unknown): CallToolResult {
 	const message = err instanceof Error ? err.message : String(err);
 	return { content: [{ type: "text", text: `Error: ${message}` }], isError: true };
